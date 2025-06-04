@@ -6,8 +6,8 @@ from fastmcp import FastMCP
 
 PAPER_DIR = "papers"
 
-# Get port from environment variable (for cloud deployment) or default to 8001
-PORT = int(os.environ.get('PORT', 8001))
+# Get port from environment variable (for cloud deployment) or default to 10000
+PORT = int(os.environ.get('PORT', 10000))
 
 # Initialize FastMCP server with dynamic port for cloud deployment
 mcp = FastMCP("research", port=PORT)
@@ -127,4 +127,5 @@ if __name__ == "__main__":
     print(f"📡 Connect via: http://localhost:{PORT}/sse (local) or your cloud URL")
     
     # Run server with SSE transport for remote access
-    mcp.run(transport="sse")
+    # Bind to 0.0.0.0 for cloud deployment accessibility
+    mcp.run(transport="sse", host="0.0.0.0", port=PORT)
